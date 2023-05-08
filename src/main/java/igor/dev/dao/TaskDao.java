@@ -1,6 +1,7 @@
 package igor.dev.dao;
 
 import igor.dev.domain.Task;
+import igor.dev.dto.TaskDto;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,13 +18,9 @@ public class TaskDao {
     private final SessionFactory sessionFactory;
 
     @Transactional
-    public Task createTask(Task task) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(task);
-        session.getTransaction().commit();
-        session.close();
-        return task;
+    public void createTask(Task task) {
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(task);
     }
 
     @Transactional(readOnly = true)
@@ -35,27 +32,19 @@ public class TaskDao {
     @Transactional(readOnly = true)
     public List<Task> getAllTasks() {
         Session session = sessionFactory.openSession();
-        List<Task> tasks = session.createQuery("from Task", Task.class).list();
-        session.close();
-        return tasks;
+         return session.createQuery("SELECT t FROM Task t", Task.class)
+                 .getResultList();
     }
 
     @Transactional
-    public Task updateTask(Task task) {
+    public void updateTask(Task updatedTask) {
         Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.update(task);
-        session.getTransaction().commit();
-        session.close();
-        return task;
+        session.merge(updatedTask);
     }
 
     @Transactional
-    public void removeTask(int task) {
+    public void removeTask(int id) {
         Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.delete(task);
-        session.getTransaction().commit();
-        session.close();
+        session.remove(session.get(Task.class, id));
     }
 }

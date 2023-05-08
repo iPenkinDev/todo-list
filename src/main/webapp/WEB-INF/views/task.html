@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Tasks</title>
+    <title>Task</title>
     <style>
         table {
             border-collapse: collapse;
@@ -42,7 +42,7 @@
 </head>
 <body>
 <div style="padding: 20px;">
-    <h2>Tasks</h2>
+    <h2>Task</h2>
     <table>
         <thead>
         <tr>
@@ -53,7 +53,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="task : ${tasks}">
+        <tr>
             <td th:text="${task.id}"></td>
             <td th:text="${task.description}"></td>
             <td th:text="${task.status}"></td>
@@ -65,7 +65,7 @@
         </tbody>
     </table>
     <div style="margin-top: 20px;">
-        <a th:href="@{/tasks/new}" class="action-btn">Create Task</a>
+        <a th:href="@{/tasks}" class="action-btn">Back to Tasks</a>
     </div>
 </div>
 </body>

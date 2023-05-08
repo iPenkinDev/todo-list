@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping
 @RequiredArgsConstructor
 public class TaskController {
 
@@ -27,41 +28,41 @@ public class TaskController {
         return "tasks";
     }
 
-    @GetMapping("/tasks/{id}")
+    @GetMapping("/{id}")
     public String getTaskById(@PathVariable int id, Model model) {
         TaskDto taskDto = taskService.getTaskById(id);
         model.addAttribute("task", taskDto);
-        return "tasks";
+        return "task";
     }
-
-    @GetMapping("/tasks/new")
-    public String showCreateTaskForm(Model model) {
-        model.addAttribute("task", new TaskDto());
-        return "create-task";
-    }
-
-    @PostMapping("/tasks")
-    public String createTask(@ModelAttribute("task") TaskDto taskDto) {
-        taskService.createTask(taskDto);
-        return "redirect:/tasks";
-    }
-
-    @GetMapping("/tasks/{id}/edit")
-    public String showEditTaskForm(@PathVariable int id, Model model) {
-        TaskDto taskDto = taskService.getTaskById(id);
-        model.addAttribute("task", taskDto);
-        return "edit-task";
-    }
-
-    @PutMapping("/tasks/{id}")
-    public String updateTask(@PathVariable int id, @ModelAttribute("task") TaskDto taskDto) {
-        taskService.updateTask(taskDto, id);
-        return "redirect:/tasks";
-    }
-
-    @DeleteMapping("/tasks/{id}")
-    public String removeTask(@PathVariable int id) {
-        taskService.removeTask(id);
-        return "redirect:/tasks";
-    }
+//
+//    @GetMapping("/tasks/new")
+//    public String showCreateTaskForm(Model model) {
+//        model.addAttribute("task", new TaskDto());
+//        return "create-task";
+//    }
+//
+//    @PostMapping("/tasks")
+//    public String createTask(@ModelAttribute("task") TaskDto taskDto) {
+//        taskService.createTask(taskDto);
+//        return "redirect:/tasks";
+//    }
+//
+//    @GetMapping("/tasks/{id}/edit")
+//    public String showEditTaskForm(@PathVariable int id, Model model) {
+//        TaskDto taskDto = taskService.getTaskById(id);
+//        model.addAttribute("task", taskDto);
+//        return "edit-task";
+//    }
+//
+//    @PostMapping("/tasks/{id}")
+//    public String updateTask(TaskDto taskDto) {
+//        taskService.updateTask(taskDto);
+//        return "redirect:/tasks";
+//    }
+//
+//    @GetMapping("/tasks/{id}")
+//    public String removeTask(@PathVariable int id) {
+//        taskService.removeTask(id);
+//        return "redirect:/tasks";
+//    }
 }
