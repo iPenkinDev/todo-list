@@ -1,24 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Create Task</title>
+    <style>
+        form {
+            width: 50%;
+            margin: 20px auto;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        .form-heading {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            padding: 10px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .btn {
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        .btn-cancel {
+            background-color: #f44336;
+            margin-right: 5px;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 20px;
+            margin-left: 10px;
+        }
+        .btn-cancel {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
-<h1>Create Task</h1>
-<form th:object="${task}" th:action="@{/tasks}" method="post">
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description" required>
-    <br>
-    <label for="status">Status:</label>
-    <select id="status" name="status">
-        <option value="TODO">To do</option>
-        <option value="IN_PROGRESS">In progress</option>
-        <option value="DONE">Done</option>
-    </select>
-    <br>
-    <button type="submit">Create Task</button>
+<form method="post">
+    <div class="form-heading">
+        <h2>Create Task</h2>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="5" required></textarea>
+    </div>
+
+    <div class="btn-group">
+        <button type="submit" class="btn">Create Task</button>
+        <button type="button" class="btn btn-cancel" onClick="location.href='/tasks'">Cancel</button>
+    </div>
 </form>
-<a th:href="@{/tasks}">Back to tasks</a>
 </body>
 </html>

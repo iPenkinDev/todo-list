@@ -58,8 +58,10 @@
             <td th:text="${task.description}"></td>
             <td th:text="${task.status}"></td>
             <td>
+                <!-- Добавлен код для ссылки на страницу задачи по id -->
+                <a th:href="@{'/tasks/' + ${task.id}}" class="action-btn">View</a>&nbsp;
                 <a th:href="@{'/tasks/' + ${task.id} + '/edit'}" class="action-btn edit-btn">Edit</a>
-                <a th:href="@{'/tasks/' + ${task.id}}" class="action-btn delete-btn">Delete</a>
+                <a th:href="@{/tasks/delete/{id}(id=${task.id})}" class="action-btn delete-btn">Delete</a>
             </td>
         </tr>
         </tbody>

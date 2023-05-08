@@ -1,5 +1,6 @@
 package igor.dev.controller;
 
+import igor.dev.domain.Status;
 import igor.dev.dto.TaskDto;
 import igor.dev.service.impl.TaskServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -10,18 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping
+@RequestMapping("/tasks")
 @RequiredArgsConstructor
 public class TaskController {
 
     private final TaskServiceImpl taskService;
 
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "hello";
-    }
-
-    @GetMapping("/tasks")
+    @GetMapping()
     public String getAllTasks(Model model) {
         List<TaskDto> taskList = taskService.getAllTasks();
         model.addAttribute("tasks", taskList);
@@ -34,35 +30,37 @@ public class TaskController {
         model.addAttribute("task", taskDto);
         return "task";
     }
-//
-//    @GetMapping("/tasks/new")
-//    public String showCreateTaskForm(Model model) {
-//        model.addAttribute("task", new TaskDto());
-//        return "create-task";
-//    }
-//
-//    @PostMapping("/tasks")
-//    public String createTask(@ModelAttribute("task") TaskDto taskDto) {
-//        taskService.createTask(taskDto);
-//        return "redirect:/tasks";
-//    }
-//
-//    @GetMapping("/tasks/{id}/edit")
-//    public String showEditTaskForm(@PathVariable int id, Model model) {
-//        TaskDto taskDto = taskService.getTaskById(id);
-//        model.addAttribute("task", taskDto);
-//        return "edit-task";
-//    }
-//
-//    @PostMapping("/tasks/{id}")
-//    public String updateTask(TaskDto taskDto) {
-//        taskService.updateTask(taskDto);
-//        return "redirect:/tasks";
-//    }
-//
-//    @GetMapping("/tasks/{id}")
-//    public String removeTask(@PathVariable int id) {
-//        taskService.removeTask(id);
-//        return "redirect:/tasks";
-//    }
+
+    @GetMapping("/new")
+    public String showCreateTaskForm(Model model) {
+        model.addAttribute("task", new TaskDto());
+        return "create-task";
+    }
+
+    @PostMapping("/new")
+    public String createTask(@ModelAttribute("task") TaskDto taskDto) {
+        taskService.createTask(taskDto);
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEditTaskForm(@PathVariable int id, Model model) {
+        TaskDto taskDto = taskService.getTaskById(id);
+        model.addAttribute("task", taskDto);
+        model.addAttribute("status", Status.values());
+        return "edit-task";
+    }
+
+    @PostMapping("/edit")
+    public String updateTask(@ModelAttribute TaskDto taskDto) {
+        taskService.updateTask(taskDto);
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String removeTask(@PathVariable int id) {
+        taskService.removeTask(id);
+        System.out.println("id = " + id);
+        return "redirect:/tasks";
+    }
 }

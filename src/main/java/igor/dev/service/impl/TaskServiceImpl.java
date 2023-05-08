@@ -1,6 +1,7 @@
 package igor.dev.service.impl;
 
 import igor.dev.dao.TaskDao;
+import igor.dev.domain.Status;
 import igor.dev.domain.Task;
 import igor.dev.dto.TaskDto;
 import igor.dev.service.TaskService;
@@ -19,6 +20,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     public void createTask(TaskDto taskDto) {
+        taskDto.setStatus(Status.IN_PROGRESS);
         taskDao.createTask(taskMapper.mapToEntity(taskDto));
     }
 

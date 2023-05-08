@@ -32,19 +32,20 @@ public class TaskDao {
     @Transactional(readOnly = true)
     public List<Task> getAllTasks() {
         Session session = sessionFactory.openSession();
-         return session.createQuery("SELECT t FROM Task t", Task.class)
-                 .getResultList();
+        return session.createQuery("SELECT t FROM Task t", Task.class)
+                .getResultList();
     }
 
     @Transactional
     public void updateTask(Task updatedTask) {
-        Session session = sessionFactory.openSession();
-        session.merge(updatedTask);
+        Session session = sessionFactory.getCurrentSession();
+        session.update(updatedTask);
     }
 
     @Transactional
     public void removeTask(int id) {
-        Session session = sessionFactory.openSession();
-        session.remove(session.get(Task.class, id));
+        Session session = sessionFactory.getCurrentSession();
+        Task task = session.byId(Task.class).load(id);
+        session.delete(task);
     }
 }
