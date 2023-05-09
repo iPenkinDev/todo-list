@@ -57,10 +57,11 @@
             <td th:text="${task.id}"></td>
             <td th:text="${task.description}"></td>
             <td th:text="${task.status}"></td>
-            <td>
+            <td style="vertical-align: middle; display: flex; align-items: center">
                 <a th:href="@{'/tasks/' + ${task.id} + '/edit'}" class="action-btn edit-btn">Edit</a>
-<!--                <a th:href="@{'/tasks/' + ${task.id}}" class="action-btn delete-btn">Delete</a>-->
-                <a th:href="@{/tasks/delete/{id}(id=${task.id})}" class="action-btn delete-btn">Delete</a>
+                <form th:method="DELETE" th:action="@{/tasks/delete/{id}(id=${task.id})}">
+                    <button type="submit" class="action-btn delete-btn">Delete</button>
+                </form>
             </td>
         </tr>
         </tbody>

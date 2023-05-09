@@ -2,73 +2,95 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit Task</title>
+    <style>
+        form {
+            width: 50%;
+            margin: 20px auto;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            display: flex;  /* add flexbox */
+            flex-direction: column; /* add column direction */
+            align-items: flex-start; /* move items to the left */
+        }
+
+        .button-group {
+            margin-top: 20px;
+            display: flex; /* add flexbox */
+            justify-content: space-between; /* move items apart */
+            width: 100%; /* fit to container */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;   /* add full width */
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        select option:first-of-type {
+            display: none;
+        }
+        .btn {
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        .btn-cancel {
+            background-color: #f44336;
+            margin-right: 5px;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .btn-cancel {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
 <h1>Edit Task</h1>
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-    }
-
-    th, td {
-        text-align: left;
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f2f2f2;
-        color: #606060;
-    }
-
-    tr:hover {
-        background-color: #f5f5f5;
-    }
-
-    .action-btn {
-        display: inline-block;
-        padding: 6px 12px;
-        margin: 5px;
-        text-decoration: none;
-        background-color: #4CAF50;
-        color: #fff;
-        border-radius: 3px;
-        border: none;
-        cursor: pointer;
-    }
-
-    .edit-btn {
-        background-color: #2196F3;
-    }
-
-    .delete-btn {
-        background-color: #F44336;
-    }
-</style>
 
 <form th:action="@{/tasks/edit}" th:object="${task}" method="post">
-    <div>
-        <label for="id">ID:</label>
-        <input type="hidden" id="id" name="id" th:value="${task.id}"/>
-        <span th:text="${task.id}"></span>
-    </div>
-    <div>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" th:text="${task.description}" required></textarea>
-    </div>
-    <div>
-        <label for="status">Status:</label>
-        <select id="status" name="status" required th:field="*{status}">
-            <option th:each="status : ${status}" th:value="${status}"
-                    th:text="${#strings.capitalize(status.name())}"></option>
+    <input type="hidden" th:field="*{id}">
+
+    <label>
+        Description:
+        <textarea th:field="*{description}" rows="5" required></textarea>
+    </label>
+
+    <label>
+        Status:
+        <select th:field="*{status}" required>
+            <option value="">Select Status</option>
+            <option value="IN_PROGRESS">In progress</option>
+            <option value="DONE">Done</option>
+            <option value="PAUSED">Paused</option>
         </select>
-    </div>
-    <div>
-        <button type="submit" class="btn btn-primary">Update Task</button>
+    </label>
+
+    <div class="btn-group">
+        <button type="submit" class="btn">Save Task</button>
+        <button type="button" class="btn btn-cancel" onClick="location.href='/tasks'">Cancel</button>
     </div>
 </form>
+
 </body>
 </html>
