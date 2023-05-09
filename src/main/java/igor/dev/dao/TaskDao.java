@@ -5,9 +5,13 @@ import igor.dev.dto.TaskDto;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
@@ -30,10 +34,13 @@ public class TaskDao {
     }
 
     @Transactional(readOnly = true)
-    public List<Task> getAllTasks() {
-        Session session = sessionFactory.openSession();
-        return session.createQuery("SELECT t FROM Task t", Task.class)
-                .getResultList();
+    public List<Task> getTasksWithPagination(int pageNumber, int pageSize) {
+        Session session = sessionFactory.getCurrentSession();
+        int offset = (pageNumber - 1) * pageSize;
+        Query<Task> query = session.createQuery("SELECT t FROM Task t", Task.class);
+        query.setFirstResult(offset);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
     }
 
     @Transactional

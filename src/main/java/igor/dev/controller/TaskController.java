@@ -4,6 +4,9 @@ import igor.dev.domain.Status;
 import igor.dev.dto.TaskDto;
 import igor.dev.service.impl.TaskServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +21,12 @@ public class TaskController {
     private final TaskServiceImpl taskService;
 
     @GetMapping()
-    public String getAllTasks(Model model) {
-        List<TaskDto> taskList = taskService.getAllTasks();
-        model.addAttribute("tasks", taskList);
+    public String getTasksWithPagination(Model model,
+                                         @RequestParam(name = "page", defaultValue = "1") int pageNumber,
+                                         @RequestParam(name = "size", defaultValue = "5") int pageSize) {
+        List<TaskDto> taskDtos = taskService.getTasksWithPagination(pageNumber, pageSize);
+        Page<TaskDto> taskPage = new PageImpl<>(taskDtos, PageRequest.of(pageNumber-1, pageSize), taskDtos.size());
+        model.addAttribute("tasks", taskPage);
         return "tasks";
     }
 
