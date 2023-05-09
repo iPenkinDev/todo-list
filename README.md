@@ -5,7 +5,6 @@ The simple CRUD program ToDoList.
 
 ### Technology stack:
  -Java 17    
- -Spring Framework (MVC)   
  -Spring Data JPA  
  -Apache Maven  
  -Tomcat  
