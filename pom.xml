@@ -110,7 +110,7 @@
 
   </dependencies>
   <build>
-    <finalName>todo-list</finalName>
+    <finalName>TodoList</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -120,6 +120,10 @@
           <source>17</source>
           <target>17</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.2</version>
       </plugin>
     </plugins>
   </build>
