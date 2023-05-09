@@ -23,7 +23,7 @@ The simple CRUD program ToDoList.
  
  **Build**
  
- ```mvn clean install```  
+ ```mvn clean package```  
  ```docker build -t todoapp .```  
  ```docker-compose up --build```  
  
