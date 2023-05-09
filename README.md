@@ -24,7 +24,7 @@ The simple CRUD program ToDoList.
  **Build**
  
  ```mvn clean install```  
- ```docker build -t docker build -t todoapp .```  
+ ```docker build -t todoapp .```  
  ```docker-compose up --build```  
  
  **In browser** 
