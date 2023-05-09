@@ -34,13 +34,10 @@ public class TaskDao {
     }
 
     @Transactional(readOnly = true)
-    public List<Task> getTasksWithPagination(int pageNumber, int pageSize) {
-        Session session = sessionFactory.getCurrentSession();
-        int offset = (pageNumber - 1) * pageSize;
-        Query<Task> query = session.createQuery("SELECT t FROM Task t", Task.class);
-        query.setFirstResult(offset);
-        query.setMaxResults(pageSize);
-        return query.getResultList();
+    public List<Task> getAllTasks() {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("SELECT t FROM Task t", Task.class)
+                .getResultList();
     }
 
     @Transactional

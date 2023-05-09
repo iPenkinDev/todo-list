@@ -29,11 +29,8 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.mapToDTO(taskDao.getTaskById(id));
     }
 
-    public List<TaskDto> getTasksWithPagination(int pageNumber, int pageSize) {
-        List<Task> tasks = taskDao.getTasksWithPagination(pageNumber, pageSize);
-        return tasks.stream()
-                .map(taskMapper::mapToDTO)
-                .collect(Collectors.toList());
+    public List<TaskDto> getAllTasks() {
+        return taskDao.getAllTasks().stream().map(taskMapper::mapToDTO).toList();
     }
 
     public void updateTask(TaskDto taskDto) {

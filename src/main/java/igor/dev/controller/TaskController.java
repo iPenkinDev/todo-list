@@ -21,12 +21,9 @@ public class TaskController {
     private final TaskServiceImpl taskService;
 
     @GetMapping()
-    public String getTasksWithPagination(Model model,
-                                         @RequestParam(name = "page", defaultValue = "1") int pageNumber,
-                                         @RequestParam(name = "size", defaultValue = "5") int pageSize) {
-        List<TaskDto> taskDtos = taskService.getTasksWithPagination(pageNumber, pageSize);
-        Page<TaskDto> taskPage = new PageImpl<>(taskDtos, PageRequest.of(pageNumber-1, pageSize), taskDtos.size());
-        model.addAttribute("tasks", taskPage);
+    public String getAllTasks(Model model) {
+        List<TaskDto> taskList = taskService.getAllTasks();
+        model.addAttribute("tasks", taskList);
         return "tasks";
     }
 

@@ -8,7 +8,7 @@ public interface TaskService {
 
     void createTask(TaskDto taskDto);
     TaskDto getTaskById(int id);
-    List<TaskDto> getTasksWithPagination(int pageNumber, int pageSize);
+    List<TaskDto> getAllTasks();
     void updateTask(TaskDto taskDto);
     void removeTask(int id);
 

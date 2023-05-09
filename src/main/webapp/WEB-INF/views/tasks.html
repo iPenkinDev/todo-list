@@ -88,46 +88,6 @@
         </tr>
         </tbody>
     </table>
-    <br/>
-
-    <div style="display: flex; justify-content: center;">
-        <div>
-            <span>Page <b th:text="${tasks.number + 1}"></b> of <b th:text="${tasks.totalPages}"></b></span>
-        </div>
-        <div style="margin-left: auto">
-            <nav>
-                <ul class="pagination">
-                    <li th:if="${!tasks.first}" class="page-item">
-                        <button class="page-link" th:disabled="${tasks.first}"
-                                th:href="@{${'/tasks'}(page=0,size=${tasks.size})}">
-                            First
-                        </button>
-                    </li>
-                    <li th:if="${tasks.hasPrevious}" class="page-item">
-                        <button class="page-link" th:href="@{${'/tasks'}(page=${tasks.number - 1},size=${tasks.size})}">
-                            Previous
-                        </button>
-                    </li>
-                    <li th:each="page : ${#numbers.sequence(0, tasks.totalPages - 1)}"
-                        th:classappend="${tasks.number == page} ? 'page-item active' : 'page-item'">
-                        <a class="page-link" th:href="@{${'/tasks'}(page=${page+1},size=${tasks.size})}"
-                           th:text="Next"></a>
-                    </li>
-                    <li th:if="${tasks.hasNext}" class="page-item">
-                        <button class="page-link" th:href="@{${'/tasks'}(page=${tasks.number + 1},size=${tasks.size})}">
-                            Next
-                        </button>
-                    </li>
-                    <li th:if="${!tasks.last}" class="page-item">
-                        <button class="page-link" th:href="@{${'/tasks'}(page=${tasks.totalPages - 1},size=${tasks.size})}">
-                            Last
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-
-        </div>
-    </div>
 </div>
 </body>
 </html>
