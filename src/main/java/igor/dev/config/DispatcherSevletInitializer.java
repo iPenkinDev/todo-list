@@ -10,7 +10,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.util.EnumSet;
 
-public class DispatcherSevletInittializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class DispatcherSevletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     protected Class<?>[] getRootConfigClasses() {
         return new Class[0];
     }

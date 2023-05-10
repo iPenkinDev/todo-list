@@ -4,7 +4,6 @@ import igor.dev.domain.Task;
 import igor.dev.dto.TaskDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,7 +1,6 @@
 package igor.dev.dao;
 
 import igor.dev.domain.Task;
-import igor.dev.dto.TaskDto;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
