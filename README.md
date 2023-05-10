@@ -5,8 +5,7 @@ The simple CRUD program ToDoList.
 
 ### Technology stack:
  -Java 17    
- -Spring Framework (MVC)   
- -Spring Data JPA  
+ -Spring Framework  
  -Apache Maven  
  -Tomcat  
  -PostgreSQL    
@@ -23,7 +22,7 @@ The simple CRUD program ToDoList.
  
  **Build**
  
- ```mvn clean install```  
+ ```mvn clean package```  
  ```docker build -t todoapp .```  
  ```docker-compose up --build```  
  
