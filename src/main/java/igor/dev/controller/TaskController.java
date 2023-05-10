@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,15 @@ public class TaskController {
     private final TaskServiceImpl taskService;
 
     @GetMapping()
-    public String getAllTasks(Model model) {
-        List<TaskDto> taskList = taskService.getAllTasks();
-        model.addAttribute("tasks", taskList);
+    public String getAllTasks(@RequestParam(defaultValue = "0", required = false) int page,
+                              @RequestParam(defaultValue = "5", required = false) int pageSize,
+                              Model model) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<TaskDto> taskPage = taskService.getAllTasksPages(pageable);
+        model.addAttribute("tasks", taskPage.getContent());
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalPages", taskPage.getTotalPages());
         return "tasks";
     }
 

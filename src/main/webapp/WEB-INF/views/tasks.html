@@ -55,6 +55,7 @@
         .btn-create {
             order: -1;
         }
+
     </style>
 </head>
 <body>
@@ -88,6 +89,12 @@
         </tr>
         </tbody>
     </table>
+
+    <div>
+        <a th:if="${page > 0}" th:href="@{/tasks(page=${page - 1},pageSize=${pageSize})}" class="action-btn">Previous</a>
+        <a th:if="${page < totalPages - 1}" th:href="@{/tasks(page=${page+1},pageSize=${pageSize})}" class="action-btn">Next</a>
+    </div>
+
 </div>
 </body>
 </html>

@@ -6,15 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
-@SuppressWarnings("deprecation")
 @Repository
 @RequiredArgsConstructor
 public class TaskDao {
@@ -33,12 +32,6 @@ public class TaskDao {
         return session.get(Task.class, id);
     }
 
-    @Transactional(readOnly = true)
-    public List<Task> getAllTasks() {
-        Session session = sessionFactory.openSession();
-        return session.createQuery("SELECT t FROM Task t", Task.class)
-                .getResultList();
-    }
 
     @Transactional
     public void updateTask(Task updatedTask) {
@@ -51,5 +44,21 @@ public class TaskDao {
         Session session = sessionFactory.getCurrentSession();
         Task task = session.byId(Task.class).load(id);
         session.delete(task);
+    }
+
+    @Transactional
+    public Page<Task> getAllTasksPages(Pageable pageable) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Task> query = session.createQuery("SELECT t FROM Task t ORDER BY t.description", Task.class);
+
+        query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        query.setMaxResults(pageable.getPageSize());
+
+        List<Task> list = query.list();
+
+        Query<Long> countQuery = session.createQuery("SELECT count(*) FROM Task t", Long.class);
+        long totalCount = countQuery.uniqueResult();
+
+        return new PageImpl<>(list, pageable, totalCount);
     }
 }
